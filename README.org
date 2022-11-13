@@ -1,7 +1,33 @@
+* Why CLI
+
+  Command line interface works with the keyboard. Where you can get exactly
+  what you need, manipulate it the way you want, and automate the procedure
+  using scripts.
+
+  With GUI, you are bound to what "the designers" have given you. You're
+  not in control of what you see and can't automate the procedure. See how
+  hard it is to test a GUI program (I feel you "front-end
+  developers"). There are sophisticated tools created just for testing the
+  GUI, and still, it is not easy to use.
+
+  Not to mention how slow you can be when chasing the mouse around the
+  screen. Sure, "seeing" the commands can be convenient, but only for when
+  you're new to the ecosystem and don't know the program's capabilities.
+
+  One more thing, GUI changes from one program or even one version to
+  another. With one upgrade, you might completely lose your way
+  around. However, a good designed CLI has a backward-compatible
+  nature. Which means, with the upgrades, you are still on the track while
+  enjoying the new features.
+
+  Finally, in CLI you can pass around the results of your work from one
+  program to another. This is called "pipe"ing. An awesome and extremely
+  useful feature that is impossible by design in GUI.
+
 * Why Bash
 
-- You may already know how to use 'for', 'while', 'if', or 'variables' in
-  another programming language. So why should you care learning 'Bash'?
+  You may already know how to use =for=, =while=, =if=, or =variables= in
+  another programming language. So why should you care learning =Bash=?
 
   If that is the only thing you know, please note that you've merely
   scratched the surface! They have many advanced features, fixing a problem
