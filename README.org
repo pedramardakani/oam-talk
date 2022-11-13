@@ -34,6 +34,19 @@
   the previous programming language could not solve, or it was
   hard/slow/cumbersome/ugly to do so in the old way.
 
+  With Bash, you have full control over your machine. You can execute
+  entire programs, scripts, manage services, handle various situations,
+  automate cumbersome and repetitive work. Learning about the basic
+  capabilities such as loops and conditional goes a long way. But you're
+  not limited to that. There are many GNU programs and other CLI tools that
+  come to your aid. Without them, you might need thousands of lines of code
+  to accomplish the simplest tasks.
+
+  Bash enables you to unleash the power of *modularity*. That is, you have
+  access to many programs that are specialized to do one and only one job
+  the best way possible. Combining these tools will liberate you from using
+  various libraries and plug-ins for the programming language you use.
+
 * I already know Python, so why should I care?
 
   Python has its own merits. It's great for quickly developing
