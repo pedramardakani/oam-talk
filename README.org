@@ -109,6 +109,9 @@ https://archive.stsci.edu/hlsp/uvudf
 3. But this is a lot of options to remember, and a lot to type, so let's
    set an alias for =ls= and =ll=
 
+   : alias ls="ls --color"
+   : alias ll="ls -ltrha --color"
+
 4. Change directory
 
    : cd w/bash-tutorial
