@@ -1,0 +1,513 @@
+* Why Bash
+
+- You may already know how to use 'for', 'while', 'if', or 'variables' in
+  another programming language. So why should you care learning 'Bash'?
+
+  If that is the only thing you know, please note that you've merely
+  scratched the surface! They have many advanced features, fixing a problem
+  the previous programming language could not solve, or it was
+  hard/slow/cumbersome/ugly to do so in the old way.
+
+* Get the terminal ready for presentation
+
+  # Later I want to show the convenience of using 'alias'
+  : unalias ls ll
+
+* Goal
+
+** Check
+
+https://archive.stsci.edu/hlsp/uvudf
+
+** Part zero, moving around the command line
+
+1. Where are we?
+
+   # Kernel name (Linux, Darwin, etc.)
+   : uname --kernel-name
+
+   # Operating system (GNU/Linux, macOS, etc.)
+   : uname --operating-system
+
+   # Current location (i.e. parent working directory)
+   : pwd
+
+2. Who goes there?!
+
+   : ls
+   : ls --help
+   : ls --color
+   : ls -l
+   : ls -ltrha --color
+
+3. But this is a lot of options to remember, and a lot to type, so let's
+   set an alias for =ls= and =ll=
+
+4. Change directory
+
+   : cd w/bash-tutorial
+
+5. Check download URL
+
+   : cat to-download.txt
+
+6. Create directory
+
+   : mkdir dataset
+   : ls
+
+7. Download the file
+
+   : curl https://archive.stsci.edu/missions/hlsp/uvudf/v2.0/hlsp_uvudf_hst_wfc3-uvis_udf-epoch3_multi_v2.0_cat.fits
+
+   # We could have given it the output name in the first place by passing the '-o' option
+   : curl -o catalog-raw.fits \
+   :      https://archive.stsci.edu/missions/hlsp/uvudf/v2.0/hlsp_uvudf_hst_wfc3-uvis_udf-epoch3_multi_v2.0_cat.fits
+
+** The analysis
+
+1. Copy the catalogue file with a better name
+
+   : cd ~/w/bash-tutorial
+   : cp dataset/hlsp_uvudf_hst_wfc3-uvis_udf-epoch3_multi_v2.0_cat.fits catalog-raw.fits
+
+2. Convert to text
+
+   # Just bear with me, we're creating a human readable file from a binary
+   # FITS format using Gnuastro's Table program. You'll learn about it in
+   # the future sessions.
+   : asttable catalog-raw.fits --txtf64format fixed -o catalog-raw.txt
+
+3. Inspect the file with =less=
+
+   : less catalog-raw.txt
+
+4. Print the first 97 rows
+
+   : head -97 catalog-raw.txt
+
+5. They all start with '#', so we can get them with =grep= as well (no need
+   to speculate)
+
+   # Contains the word 'Column' (case sensitive)
+   : grep Column catalog-raw.txt
+
+   # Use the --color option to see the matches
+   : grep --color Column catalog-raw.txt
+
+   # Or make it case insensitive
+   : grep -i column catalog-raw.txt
+
+   Note that simply writing # would return an error since the pound sign
+   has a special meaning: "comment". Comments are lines that are ignored by
+   the command line. So what actually happens, is that bash ignores
+   whatever comes right after the pound sign. To avoid that, we're
+   sandwiching the '#' with single quotes. This might happen when you're
+   looking for non-alphabetic characters as they might have special
+   meanings. Be careful and sandwich them between 'single quotes'.
+
+   # Bad form
+   : grep # catalog-raw.txt
+
+   # Correct form
+   : grep -e '#' catalog-raw.txt
+
+   # [Advanced] use regex to say lines that start with the pound sign '#'
+   # (read more about Regular expressions in grep manual).
+   : grep -e '^#' catalog-raw.txt
+
+6. Now write that to a new file, and write the body to another file as well
+
+   : grep -e  '^#' catalog-raw.txt > header.txt
+   : grep -ve '^#' catalog-raw.txt > data.txt
+
+7. Let's check the header again, this time with =more= and =cat=
+
+   : cat header.txt
+   : more header.txt
+   : less header.txt
+
+   Note that if we don't add the =.txt= extension, nothing bad happens! The
+   computer doesn't care! It knows what these files contain. It's only for
+   us humans, and also, they can be helful when categorizing files. Wanna
+   try? See:
+
+   : file header.txt
+   : file catalog-raw.fits
+
+8. Now, let's say we need to extract the spectroscopic redshifts denoted by
+   SPECZ from the raw catalog. First, we'd have to figure out the column
+   number. But instead of scrolling through the 97 columns, let's just
+   =grep= it!
+
+   # Note that order of the options could matter, in this case, it doesn't.
+   : grep SPECZ header.txt
+
+   # Let's put it in a new file
+   : grep -i 'specz ' header.txt > select.txt
+
+   # Check available filters
+   : grep -i mag_ header.txt
+
+   # Let's get the 435 filter as well
+   : grep -i mag_f435w header.txt
+
+   # Suppose there's a lot of them and we can't just remember them. Let's
+   # put it in a new file for later reference:
+   : grep -i mag_f435w header.txt > select.txt
+
+   # BUT WAIT! It just overrites the file! So we'd have to append it with >>
+   : rm select.txt
+   : grep -i ' id '      header.txt >  select.txt
+   : grep -i ' specz '   header.txt >> select.txt
+   : grep -i 'mag_f435w' header.txt >> select.txt
+   : grep -i 'mag_f606w' header.txt >> select.txt
+   : grep -i 'mag_f775w' header.txt >> select.txt
+
+   How can we show them at the same time? Use the pipe =|= character. Since
+   it is a special character, we need to escape it with slash =\=:
+
+   : grep -i -e'mag_f435\|mag_f606' header.txt
+
+   Feeling bad about all the new information? You can get all of the
+   information from here:
+
+   : info grep
+
+9. How about putting some colors in a separate file? Even better, let's do
+   some arithmetic over them simultaneously!
+
+   : awk '{print $1}' data.txt
+
+   # [Advanced] We actually didn't need to put the data in a separate file
+   # just to use AWK easier. AWK takes regex as well. For example:
+   : awk '!/^#/{print $1}' catalog-raw.txt > demo.txt
+   : less demo.txt
+
+   See how the _regex_ seems similar in both =grep= and =awk=? This happens
+   a lot. So when you learn a concept, usually it applies to other programs
+   as well. Especially the GNU family.
+
+   # Get the ID, SPECZ, F435W, F606W, F775W. We want ID so we can identify
+   # the final results for later use
+   : cat select.txt
+   : awk '{print $1, $94, $10, $11, $12}' data.txt
+
+   # But I don't want to see all of them, just the last line would
+   # suffice. How can we use "tail" here? Use the pipe "|"!
+   : awk '{print $1, $94, $10, $11, $12}' data.txt | tail -1
+
+   # Let's calculate F435W-F775W to estimate "color"
+   : awk '{print $1, $94, $10, $11, $12, $10-$12}' data.txt | tail -1
+   : awk '{print $1, $94, $10, $11, $12, $10-$12}' data.txt > magnitudes.txt
+
+10. Now select the reddest objects
+
+    # We're saying where 6th column is greater than 3, print it (default
+    # behavior)
+    : awk '$6>3' magnitudes.txt
+
+    # Explicitely saying print all columns (that's $0)
+    : awk '$6>3 {print $0}' magnitudes.txt
+
+    # Only their ID and SPECZ
+    : awk '$6>3 {print $1, $2}' magnitudes.txt
+
+    # Save them in a file
+    : awk '$6>3' magnitudes.txt > reddest.txt
+
+    But it has lots of 'nan' values, let's filter them out as well:
+
+    # Add conditions, also, "nan" is a string, so sandwich it between
+    # double quotations. In AWK, single quotations have special meaning, it
+    # shows the start and stop of the commands, so let's be nice and not
+    # confuse it.
+    : awk '$6>3 && $2!="nan"' magnitudes.txt
+
+    It is OK, let's put it in another catalog:
+
+    : awk '$6>3 && $2!="nan"' magnitudes.txt > reddest-with-z.txt
+
+11. Count how many objects we've got so far:
+
+    # Use word count
+    : wc reddest-with-z.txt
+
+    # Also, open the help and check the options
+    : wc --help
+
+    # Now check lines, characters, etc. for demo
+    : wc -l reddest-with-z.txt
+
+    # Compare with previous catalog
+    : wc -l magnitudes.txt
+
+12. Now let's sort by SPECZ in ascending order
+
+    : sort -nk2 reddest-with-z.txt
+
+13. How do we get the object with the max redshift?
+
+    : sort -nk2 reddest-with-z.txt | tail -1
+
+14. What is its value?
+
+    : sort -nk2 reddest-with-z.txt | tail -1 | awk '{print $2}'
+
+15. We only need 3 decimals:
+
+    : sort -nk2 reddest-with-z.txt | tail -1 | awk '{printf "%.3f\n", $2}'
+
+16. Sneak peak at Gnuastro's Table program:
+
+    # Bug in table range! I used grep since the '--range=SPECZ,-98,98'
+    # printed the '99' values as well!
+    : asttable catalog-raw.fits -cID,SPECZ,10,11,12,'arith $10 $12 -' --sort=SPECZ \
+    : | asttable  --range=6,3:inf --txtf64format fixed \
+    : | grep -ve' -\?99.0*0 '
+
+** Variables
+
+1. Let's say we'd want a random floating point number as the last column
+   when we're creating mock galaxies, etc. How do we create random numbers?
+
+   First we'd need to learn about regualr and special variables, how do we
+   get or set them? There are rules for that:
+
+   - Start with characters (case sensitive), and to split, use the
+     underscore "_" character:
+
+     : foo=1
+     : Foo=2
+     : echo $foo
+     : echo $Foo
+     : 2a=5
+     # We get an error here!
+     : response="YAY!"
+     : echo $response
+     : echo "$USER: is this fun?"
+     : echo "audience: $response"
+
+2. Simple arithmetic, only works with integers NOT floating points!
+
+   : echo $(( 5+12 ))
+   : echo $(( $foo+$Foo ))
+
+   # Put this into another variable
+   : bar=3
+   : baz=17
+   : foo=$(( $bar+$baz ))
+   : echo $foo
+   : echo "Variable foo is: $foo"
+
+3. How do I deal with floating point arithmetic you say? Use AWK ;-)
+
+   : echo | awk '{print 1.2 * 10}'
+
+4. Random numbers
+
+   : echo $RANDOM
+
+5. How do I know this? Cheating of course:
+
+   # Go to 'Shell Variables' section and find RANDOM, show the bounds which
+   # is the range from '0' up to '32767'
+   : info bash
+
+   Notice that the internal variables are in all caps. Using ALLCAPS
+   variable names are discouraged since you might accidentally overwrite a
+   critical shell variable! So please just use lower case variable names.
+
+   : echo $PWD
+   : echo $USER
+   : echo $PATH
+   : echo $PS1
+   : PS1="\[\033[01;35m\]OAM$ \[\033[00m\]"
+
+   # Also, you can check all the special variables using 'export'
+   : export
+
+6. Random number up to 100
+
+   : echo $(( $RANDOM%100 ))
+
+7. Now let's use =awk= to add a column of random numbers
+
+   : awk '{print $0}' reddest-with-z.txt
+   : awk '{print $0, rand()}' reddest-with-z.txt
+
+   # If we run it again, you can see that the random numbers are actually
+   # the same! This is because AWK uses the same random-seed. This is to
+   # make random numbers 'reproducible'. If you want to actually change the
+   # random number for every execution, you must change the random-seed
+   : awk '{print $0, rand()}' reddest-with-z.txt
+   : awk 'BEGIN{srand('$RANDOM')}{print $0, rand()}' reddest-with-z.txt
+
+   # Now test it again
+   : awk 'BEGIN{srand('$RANDOM')}{print $0, rand()}' reddest-with-z.txt
+   : awk 'BEGIN{srand('$RANDOM')}{print $0, rand()}' reddest-with-z.txt
+   : awk 'BEGIN{srand('$RANDOM')}{print $0, rand()}' reddest-with-z.txt
+
+   # It Changes! Now let's format the numbers so we can read them
+   # easily. Let's say we are only interested in ID, SPECZ, and the random
+   # number
+   : awk 'BEGIN{srand('$RANDOM')} \
+   :      {printf "%-8d%-10.3f%-10.3f\n", $1, $2, rand()}' \
+   :     reddest-with-z.txt
+
+** Conditional
+
+1. The holy 'if'
+
+   # Simple
+   : if [ 5 -gt 2 ]; then echo "Duh"; else echo "Seriously?"; fi
+
+   # Now use a variable
+   : x=$RANDOM; if [ $x -gt 16000 ]; then echo "TOPHALF :-D $x"; else echo "BOTTOMHALF :-( $x"; fi
+
+   # You could also checking if a file exists, a string is matched,
+   # etc. Where to get the info? The info! Open bash and search for
+   # 'conditional constructs'.
+   : info bash
+
+** Loop
+
+1. The =while= loop
+
+   # Just print the ID and Spectroscopic redshift
+   : cat magnitudes.txt | while read -r id z rest_of_line ; \
+   :                            do echo "Object $id redshift $z"; done
+
+   # Now put each value in its own file!
+   : mkdir sample
+   : ls
+   : cat magnitudes.txt | while read -r id z rest; \
+   :                            do echo "$id $z" > sample/$id.txt; done
+
+   # Similarly you can achieve the same with AWK
+   : rm sample/*
+   : ls sample/
+   : awk '{print $1, $2 > "sample/"$1".txt"}' magnitudes.txt
+
+2. The =for= loop
+
+   Set the index and the iterable:
+
+   # My Very Educated Mom Just Served Us Nine Pizzas
+   : for planet in Mars Venus Earth Mercury; do echo "Hi $planet"; done
+
+   # Or even list the files here
+   : for f in $(ls); do echo "file: $f"; done
+
+   # BEWARE of white space in filenames as well! It's a good practice to
+   # use dash '-' instead of white space.
+
+   Now let's print a sequence, using ... =seq=!
+
+   : seq 5
+   : seq 10
+   : seq 5 10
+   : seq 5 0.5 10
+
+   Again, in the for loop:
+
+   : for i in $(seq 5); do echo "Galaxy $i"; done
+
+   Now check for some ids in the samples
+
+   : for i in $(seq 20); do echo "Sample $i" ; cat sample/$i.txt ; done
+
+   Some samples did not exist! Let's check for their existance first and
+   then print the details
+
+   : for i in $(seq 20); do if [ -f sample/$i.txt ]; then echo "Sample $i" ; cat sample/$i.txt ; fi; done
+
+** Package
+
+   Let's say now you've done some analysis and you'd like to archive it or
+   send to a colleague. Instead of just sending it in its big size, you can
+   compress it to prevent wasting space on the disk!
+
+   # Check the initial size
+   : ls -lh catalog-raw.txt
+   : du -h catalog-raw.txt
+
+   # Compress and check again
+   : gzip catalog-raw.txt
+   : ls -lh
+
+   # De-compress
+   : gunzip catalog-raw.txt.gz
+
+   How about all the files we just created? Let's put them into a tarball
+   so it becomes a single file
+
+   : tar -cvf my-discovery.tar *.txt
+   : mkdir unpack
+   : cd unpack
+   : tar -xf ../my-discovery.tar
+
+   As you've already guessed, this can be compressed as well
+
+   : cd ..
+   : file my-discovery.tar
+   : gzip my-discovery.tar
+   : file my-discovery.tar.gz
+   : ls -lh *.gz
+
+   Or all in one command
+
+   # Remove the previous compressed tarball
+   : rm my-discovery.tar.gz
+
+   # Create a new compressed tarball in one command
+   : tar -xvaf my-discovery.tar.gz *.txt
+   : ls -lh *.gz
+
+** History
+
+   Now this is how =bash= figures out what was the last command!
+
+   : history
+
+   Now check how many times we've called =awk=
+
+   : history | grep awk
+   : history | grep awk | wc -l
+   : history | grep awk > hist-awk.txt
+
+   You can even search inside when you're on the CLI using =Ctrl+r=
+
+   : Ctrl+r <part of the command>
+   : Ctrl+r asttable
+
+** Where to get the documents?
+
+   : man awk
+   : info awk
+   : awk --help
+
+* Outro
+
+- If you've learned nothing, it doesn't matter, take your time and watch
+  the video, or even look for other tutorials
+
+- Beware of "why shoud I care!? I'm not a programmer!". If you're writing a
+  program, you're doing a programmers work. Do so elegantly, or fail
+  miserably.
+
+- Physicists are famous for solving complex problems. They break down the
+  problem to smaller solvable chunks.
+
+  For instance, you get to where you must calculate an irregular area. The
+  physicist's art is done. Now you must figure out the answer with
+  mathematics. An expert has invented a solution already. You know how to
+  calculate the area of a simple rectangle! Divide it to infinitesimal
+  parts and integrate over it! Remember: you're not a mathematician,
+  probably not a good one anyway! But you've used the tools they created.
+
+* Some nice topics on general programming
+
+- Clean coding
+- Software design
+- The SOLID princliples
