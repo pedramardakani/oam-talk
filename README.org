@@ -8,6 +8,33 @@
   the previous programming language could not solve, or it was
   hard/slow/cumbersome/ugly to do so in the old way.
 
+* I already know Python, so why should I care?
+
+  Python has its own merits. It's great for quickly developing
+  solutions. However, it is not stable and is changing a lot so
+  quickly. Your python script might not work on an older computer, or even
+  on your own computer a few months (or two years at tops) from now!
+
+  However, it is most likely that your bash script executes just find on a
+  computer as old as 1998! This backward compatibility is a key backbone of
+  *reproducibility*, an important element that is missing in many of the
+  scientific endeavors done these days.
+
+  So be nice to yourself, and use more stable and reproducible programming
+  languages for the long run.
+
+  Another issue, is that bash operates on the Kernel and has a tremendous
+  power of managing your entire machine. You can easily run programs inside
+  it (one of which is python!). If you get to know this tool and master it,
+  you'd be able to do automate many daily tasks and analyze stuff in a
+  quick and easy way.
+
+  Bash is a layer of abstraction over a very powerful set of tools. Don't
+  be fooled by its easy looks and syntax. You'd be able ot do wonders with
+  it, as soon as you get to know your way around the manual.
+
+  With that said, let's dive in.
+
 * Get the terminal ready for presentation
 
   # Later I want to show the convenience of using 'alias'
