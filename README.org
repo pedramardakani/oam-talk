@@ -118,7 +118,7 @@ https://archive.stsci.edu/hlsp/uvudf
 
 5. Check download URL
 
-   : cat to-download.txt
+   : cat url.txt
 
 6. Create directory
 
@@ -204,7 +204,21 @@ https://archive.stsci.edu/hlsp/uvudf
    : file header.txt
    : file catalog-raw.fits
 
-8. Now, let's say we need to extract the spectroscopic redshifts denoted by
+8. The data has many occurances of =-99= and =99= which are intented to be
+   values that are not actually available. But having numbers can ruin our
+   statistics without failing (which is a logical error, the nastiest kind
+   of error). So let's replace them with =nan= as in 'Not a Number':
+
+   : # See that the -99 are replaced with nan
+   : sed -e's/ -99 / nan /g' data.txt
+
+   : # But we need to store this data somewhere, also, we need to replace
+   : # 99 and the floating point -99.0000000000000 (and the positive number)
+   : # as well! So let's combine all of these criteria inside one 'sed' call
+   : sed -e's/ -\?99 / nan /g' -e's/ -\?99.0*0 / nan /g' \
+   :     data.txt > catalog.txt
+
+9. Now, let's say we need to extract the spectroscopic redshifts denoted by
    SPECZ from the raw catalog. First, we'd have to figure out the column
    number. But instead of scrolling through the 97 columns, let's just
    =grep= it!
@@ -243,34 +257,34 @@ https://archive.stsci.edu/hlsp/uvudf
 
    : info grep
 
-9. How about putting some colors in a separate file? Even better, let's do
-   some arithmetic over them simultaneously!
+10. How about putting some colors in a separate file? Even better, let's do
+    some arithmetic over them simultaneously!
 
-   : awk '{print $1}' data.txt
+    : awk '{print $1}' catalog.txt
 
-   : # [Advanced] We actually didn't need to put the data in a separate file
-   : # just to use AWK easier. AWK takes regex as well. For example:
-   : awk '!/^#/{print $1}' catalog-raw.txt > demo.txt
-   : less demo.txt
+    : # [Advanced] We actually didn't need to put the data in a separate file
+    : # just to use AWK easier. AWK takes regex as well. For example:
+    : awk '!/^#/{print $1}' catalog-raw.txt > catalog.txt
+    : less catalog.txt
 
-   See how the _regex_ seems similar in both =grep= and =awk=? This happens
-   a lot. So when you learn a concept, usually it applies to other programs
-   as well. Especially the GNU family.
+    See how the _regex_ seems similar in both =grep= and =awk=? This happens
+    a lot. So when you learn a concept, usually it applies to other programs
+    as well. Especially the GNU family.
 
-   : # Get the ID, SPECZ, F435W, F606W, F775W. We want ID so we can identify
-   : # the final results for later use
-   : cat select.txt
-   : awk '{print $1, $94, $10, $11, $12}' data.txt
+    : # Get the ID, SPECZ, F435W, F606W, F775W. We want ID so we can identify
+    : # the final results for later use
+    : cat select.txt
+    : awk '{print $1, $94, $10, $11, $12}' catalog.txt
 
-   : # But I don't want to see all of them, just the last line would
-   : # suffice. How can we use "tail" here? Use the pipe "|"!
-   : awk '{print $1, $94, $10, $11, $12}' data.txt | tail -1
+    : # But I don't want to see all of them, just the last line would
+    : # suffice. How can we use "tail" here? Use the pipe "|"!
+    : awk '{print $1, $94, $10, $11, $12}' catalog.txt | tail -1
 
-   : # Let's calculate F435W-F775W to estimate "color"
-   : awk '{print $1, $94, $10, $11, $12, $10-$12}' data.txt | tail -1
-   : awk '{print $1, $94, $10, $11, $12, $10-$12}' data.txt > magnitudes.txt
+    : # Let's calculate F435W-F775W to estimate "color"
+    : awk '{print $1, $94, $10, $11, $12, $10-$12}' catalog.txt | tail -1
+    : awk '{print $1, $94, $10, $11, $12, $10-$12}' catalog.txt > magnitudes.txt
 
-10. Now select the reddest objects
+11. Now select the reddest objects
 
     : # We're saying where 6th column is greater than 3, print it (default
     : # behavior)
@@ -297,7 +311,7 @@ https://archive.stsci.edu/hlsp/uvudf
 
     : awk '$6>3 && $2!="nan"' magnitudes.txt > reddest-with-z.txt
 
-11. Count how many objects we've got so far:
+12. Count how many objects we've got so far:
 
     : # Use word count
     : wc reddest-with-z.txt
@@ -311,23 +325,23 @@ https://archive.stsci.edu/hlsp/uvudf
     : # Compare with previous catalog
     : wc -l magnitudes.txt
 
-12. Now let's sort by SPECZ in ascending order
+13. Now let's sort by SPECZ in ascending order
 
     : sort -nk2 reddest-with-z.txt
 
-13. How do we get the object with the max redshift?
+14. How do we get the object with the max redshift?
 
     : sort -nk2 reddest-with-z.txt | tail -1
 
-14. What is its value?
+15. What is its value?
 
     : sort -nk2 reddest-with-z.txt | tail -1 | awk '{print $2}'
 
-15. We only need 3 decimals:
+16. We only need 3 decimals:
 
     : sort -nk2 reddest-with-z.txt | tail -1 | awk '{printf "%.3f\n", $2}'
 
-16. Sneak peak at Gnuastro's Table program:
+17. Sneak peak at Gnuastro's Table program:
 
     : # Bug in table range! I used grep since the '--range=SPECZ,-98,98'
     : # printed the '99' values as well!
@@ -558,14 +572,14 @@ https://archive.stsci.edu/hlsp/uvudf
 
 * Outro
 
-- If you've learned nothing, it doesn't matter, take your time and watch
+  If you've learned nothing, it doesn't matter, take your time and watch
   the video, or even look for other tutorials
 
-- Beware of "why shoud I care!? I'm not a programmer!". If you're writing a
+  Beware of "why shoud I care!? I'm not a programmer!". If you're writing a
   program, you're doing a programmers work. Do so elegantly, or fail
   miserably.
 
-- Physicists are famous for solving complex problems. They break down the
+  Physicists are famous for solving complex problems. They break down the
   problem to smaller solvable chunks.
 
   For instance, you get to where you must calculate an irregular area. The
