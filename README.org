@@ -1,76 +1,65 @@
-* Why CLI
+* Commandline interface
 
-  Command line interface works with the keyboard. Where you can get exactly
-  what you need, manipulate it the way you want, and automate the procedure
-  using scripts.
+  _C_ommand_L_ine _I_nterface (CLI) works with the keyboard.
+  Where you can get exactly what you need, manipulate it the way you want, and automate the procedure using scripts.
 
-  With GUI, you are bound to what "the designers" have given you. You're
-  not in control of what you see and can't automate the procedure. See how
-  hard it is to test a GUI program (I feel you "front-end
-  developers"). There are sophisticated tools created just for testing the
-  GUI, and still, it is not easy to use.
+  With _G_raphic _U_ser _I_nterface (GUI), you are bound to what "the designers" have given you.
+  You're not in control of what you see and can't automate the procedure.
+  See how hard it is to test a GUI program (I feel you "front-end developers").
+  There are sophisticated tools created just for testing the GUI, and still, it is not easy to use.
 
-  Not to mention how slow you can be when chasing the mouse around the
-  screen. Sure, "seeing" the commands can be convenient, but only for when
-  you're new to the ecosystem and don't know the program's capabilities.
+  Not to mention how slow you can be when chasing the mouse around the screen.
+  Sure, "seeing" the commands can be convenient, but only for when you're new to the ecosystem and don't know the program's capabilities.
 
-  One more thing, GUI changes from one program or even one version to
-  another. With one upgrade, you might completely lose your way
-  around. However, a good designed CLI has a backward-compatible
-  nature. Which means, with the upgrades, you are still on the track while
-  enjoying the new features.
+  One more thing, GUI changes from one program or even one version to another.
+  With one upgrade, you might completely lose your way around.
+  However, a good designed CLI has a backward-compatible nature.
+  Which means, with the upgrades, you are still on the track while enjoying the new features.
 
-  Finally, in CLI you can pass around the results of your work from one
-  program to another. This is called "pipe"ing. An awesome and extremely
-  useful feature that is impossible by design in GUI.
+  Finally, in CLI you can pass around the results of your work from one program to another.
+  This is called "pipe"ing.
+  An awesome and extremely useful feature that is impossible by design in GUI.
 
-* Why Bash
+* Shell and Bash
 
-  You may already know how to use =for=, =while=, =if=, or =variables= in
-  another programming language. So why should you care learning =Bash=?
+  : info bash intro what
 
-  If that is the only thing you know, please note that you've merely
-  scratched the surface! They have many advanced features, fixing a problem
-  the previous programming language could not solve, or it was
-  hard/slow/cumbersome/ugly to do so in the old way.
+  You may already know how to use =for=, =while=, =if=, or =variables= in another programming language.
+  So why should you care learning =Bash=?
 
-  With Bash, you have full control over your machine. You can execute
-  entire programs, scripts, manage services, handle various situations,
-  automate cumbersome and repetitive work. Learning about the basic
-  capabilities such as loops and conditional goes a long way. But you're
-  not limited to that. There are many GNU programs and other CLI tools that
-  come to your aid. Without them, you might need thousands of lines of code
-  to accomplish the simplest tasks.
+  If that is the only thing you know, please note that you've merely scratched the surface!
+  They have many advanced features, fixing a problem the previous programming language could not solve, or it was hard/slow/cumbersome/ugly to do so in the old way.
 
-  Bash enables you to unleash the power of *modularity*. That is, you have
-  access to many programs that are specialized to do one and only one job
-  the best way possible. Combining these tools will liberate you from using
-  various libraries and plug-ins for the programming language you use.
+  With Bash, you have full control over your machine.
+  You can execute entire programs, scripts, manage services, handle various situations, automate cumbersome and repetitive work.
+  Learning about the basic capabilities such as loops and conditional goes a long way.
+  But you're not limited to that.
+  There are many GNU programs and other CLI tools that come to your aid.
+  Without them, you might need thousands of lines of code to accomplish the simplest tasks.
+
+  Bash enables you to unleash the power of *modularity*.
+  That is, you have access to many programs that are specialized to do one and only one job the best way possible.
+  Combining these tools will liberate you from using various libraries and plug-ins for the programming language you use.
 
 * I already know Python, so why should I care?
 
-  Python has its own merits. It's great for quickly developing
-  solutions. However, it is not stable and is changing a lot so
-  quickly. Your python script might not work on an older computer, or even
-  on your own computer a few months (or two years at tops) from now!
+  Python has its own merits.
+  It's great for quickly developing solutions.
+  However, it is not stable and is changing a lot so quickly.
+  Your python script might not work on an older computer, or even on your own computer a few months (or two years at tops) from now!
 
-  However, it is most likely that your bash script executes just find on a
-  computer as old as 1998! This backward compatibility is a key backbone of
-  *reproducibility*, an important element that is missing in many of the
-  scientific endeavors done these days.
+  However, it is most likely that your bash script executes just find on a computer as old as 1998!
+  This backward compatibility is a key backbone of *reproducibility*, an important element that is missing in many of the scientific endeavors done these days.
 
-  So be nice to yourself, and use more stable and reproducible programming
-  languages for the long run.
+  So be nice to yourself, and use more stable and reproducible programming languages for the long run.
 
-  Another issue, is that bash operates on the Kernel and has a tremendous
-  power of managing your entire machine. You can easily run programs inside
-  it (one of which is python!). If you get to know this tool and master it,
-  you'd be able to do automate many daily tasks and analyze stuff in a
-  quick and easy way.
+  Another issue, is that bash operates on the Kernel and has a tremendous power of managing your entire machine.
+  You can easily run programs inside it (one of which is python!).
+  If you get to know this tool and master it, you'd be able to do automate many daily tasks and analyze stuff in a quick and easy way.
 
-  Bash is a layer of abstraction over a very powerful set of tools. Don't
-  be fooled by its easy looks and syntax. You'd be able ot do wonders with
-  it, as soon as you get to know your way around the manual.
+  Bash is a layer of abstraction over a very powerful set of tools.
+  Don't be fooled by its easy looks and syntax.
+  You'd be able ot do wonders with it, as soon as you get to know your way around the manual.
 
   With that said, let's dive in.
 
@@ -106,8 +95,7 @@ https://archive.stsci.edu/hlsp/uvudf
    : ls -l
    : ls -ltrha --color
 
-3. But this is a lot of options to remember, and a lot to type, so let's
-   set an alias for =ls= and =ll=
+3. But this is a lot of options to remember, and a lot to type, so let's set an alias for =ls= and =ll=
 
    : alias ls="ls --color"
    : alias ll="ls -ltrha --color"
@@ -155,8 +143,7 @@ https://archive.stsci.edu/hlsp/uvudf
 
    : head -97 catalog-raw.txt
 
-5. They all start with '#', so we can get them with =grep= as well (no need
-   to speculate)
+5. They all start with '#', so we can get them with =grep= as well (no need to speculate)
 
    : # Contains the word 'Column' (case sensitive)
    : grep Column catalog-raw.txt
@@ -167,13 +154,12 @@ https://archive.stsci.edu/hlsp/uvudf
    : # Or make it case insensitive
    : grep -i column catalog-raw.txt
 
-   Note that simply writing # would return an error since the pound sign
-   has a special meaning: "comment". Comments are lines that are ignored by
-   the command line. So what actually happens, is that bash ignores
-   whatever comes right after the pound sign. To avoid that, we're
-   sandwiching the '#' with single quotes. This might happen when you're
-   looking for non-alphabetic characters as they might have special
-   meanings. Be careful and sandwich them between 'single quotes'.
+   Note that simply writing # would return an error since the pound sign has a special meaning: "comment".
+   Comments are lines that are ignored by the command line.
+   So what actually happens, is that bash ignores whatever comes right after the pound sign.
+   To avoid that, we're sandwiching the '#' with single quotes.
+   This might happen when you're looking for non-alphabetic characters as they might have special meanings.
+   Be careful and sandwich them between 'single quotes'.
 
    : # Bad form
    : grep # catalog-raw.txt
@@ -196,18 +182,18 @@ https://archive.stsci.edu/hlsp/uvudf
    : more header.txt
    : less header.txt
 
-   Note that if we don't add the =.txt= extension, nothing bad happens! The
-   computer doesn't care! It knows what these files contain. It's only for
-   us humans, and also, they can be helful when categorizing files. Wanna
-   try? See:
+   Note that if we don't add the =.txt= extension, nothing bad happens!
+   The computer doesn't care!
+   It knows what these files contain.
+   It's only for us humans, and also, they can be helful when categorizing files.
+   Wanna try? See:
 
    : file header.txt
    : file catalog-raw.fits
 
-8. The data has many occurances of =-99= and =99= which are intented to be
-   values that are not actually available. But having numbers can ruin our
-   statistics without failing (which is a logical error, the nastiest kind
-   of error). So let's replace them with =nan= as in 'Not a Number':
+8. The data has many occurances of =-99= and =99= which are intented to be values that are not actually available.
+   But having numbers can ruin our statistics without failing (which is a logical error, the nastiest kind of error).
+   So let's replace them with =nan= as in 'Not a Number':
 
    : # See that the -99 are replaced with nan
    : sed -e's/ -99 / nan /g' data.txt
@@ -218,10 +204,9 @@ https://archive.stsci.edu/hlsp/uvudf
    : sed -e's/ -\?99 / nan /g' -e's/ -\?99.0*0 / nan /g' \
    :     data.txt > catalog.txt
 
-9. Now, let's say we need to extract the spectroscopic redshifts denoted by
-   SPECZ from the raw catalog. First, we'd have to figure out the column
-   number. But instead of scrolling through the 97 columns, let's just
-   =grep= it!
+9. Now, let's say we need to extract the spectroscopic redshifts denoted by SPECZ from the raw catalog.
+   First, we'd have to figure out the column number.
+   But instead of scrolling through the 97 columns, let's just =grep= it!
 
    : # Note that order of the options could matter, in this case, it doesn't.
    : grep SPECZ header.txt
@@ -247,18 +232,18 @@ https://archive.stsci.edu/hlsp/uvudf
    : grep -i 'mag_f606w' header.txt >> select.txt
    : grep -i 'mag_f775w' header.txt >> select.txt
 
-   How can we show them at the same time? Use the pipe =|= character. Since
-   it is a special character, we need to escape it with slash =\=:
+   How can we show them at the same time? Use the pipe =|= character.
+   Since it is a special character, we need to escape it with slash =\=:
 
    : grep -i -e'mag_f435\|mag_f606' header.txt
 
-   Feeling bad about all the new information? You can get all of the
-   information from here:
+   Feeling bad about all the new information?
+   You can get all of the information from here:
 
    : info grep
 
-10. How about putting some colors in a separate file? Even better, let's do
-    some arithmetic over them simultaneously!
+10. How about putting some colors in a separate file?
+    Even better, let's do some arithmetic over them simultaneously!
 
     : awk '{print $1}' catalog.txt
 
@@ -267,9 +252,10 @@ https://archive.stsci.edu/hlsp/uvudf
     : awk '!/^#/{print $1}' catalog-raw.txt > catalog.txt
     : less catalog.txt
 
-    See how the _regex_ seems similar in both =grep= and =awk=? This happens
-    a lot. So when you learn a concept, usually it applies to other programs
-    as well. Especially the GNU family.
+    See how the _regex_ seems similar in both =grep= and =awk=?
+    This happens a lot.
+    So when you learn a concept, usually it applies to other programs as well.
+    Especially the GNU family.
 
     : # Get the ID, SPECZ, F435W, F606W, F775W. We want ID so we can identify
     : # the final results for later use
@@ -351,14 +337,13 @@ https://archive.stsci.edu/hlsp/uvudf
 
 ** Variables
 
-1. Let's say we'd want a random floating point number as the last column
-   when we're creating mock galaxies, etc. How do we create random numbers?
+1. Let's say we'd want a random floating point number as the last column when we're creating mock galaxies, etc.
+   How do we create random numbers?
 
-   First we'd need to learn about regualr and special variables, how do we
-   get or set them? There are rules for that:
+   First we'd need to learn about regualr and special variables, how do we get or set them?
+   There are rules for that:
 
-   - Start with characters (case sensitive), and to split, use the
-     underscore "_" character:
+   - Start with characters (case sensitive), and to split, use the underscore "_" character:
 
      : foo=1
      : Foo=2
@@ -397,9 +382,9 @@ https://archive.stsci.edu/hlsp/uvudf
    : # is the range from '0' up to '32767'
    : info bash
 
-   Notice that the internal variables are in all caps. Using ALLCAPS
-   variable names are discouraged since you might accidentally overwrite a
-   critical shell variable! So please just use lower case variable names.
+   Notice that the internal variables are in all caps.
+   Using ALLCAPS variable names are discouraged since you might accidentally overwrite a critical shell variable!
+   So please just use lower case variable names.
 
    : echo $PWD
    : echo $USER
@@ -440,7 +425,7 @@ https://archive.stsci.edu/hlsp/uvudf
 
 ** Conditional
 
-1. The holy 'if'
+1. The holy =if=
 
    : # Simple
    : if [ 5 -gt 2 ]; then echo "Duh"; else echo "Seriously?"; fi
@@ -500,16 +485,15 @@ https://archive.stsci.edu/hlsp/uvudf
 
    : for i in $(seq 20); do echo "Sample $i" ; cat sample/$i.txt ; done
 
-   Some samples did not exist! Let's check for their existance first and
-   then print the details
+   Some samples did not exist!
+   Let's check for their existance first and then print the details
 
    : for i in $(seq 20); do if [ -f sample/$i.txt ]; then echo "Sample $i" ; cat sample/$i.txt ; fi; done
 
 ** Package
 
-   Let's say now you've done some analysis and you'd like to archive it or
-   send to a colleague. Instead of just sending it in its big size, you can
-   compress it to prevent wasting space on the disk!
+   Let's say now you've done some analysis and you'd like to archive it or send to a colleague.
+   Instead of just sending it in its big size, you can compress it to prevent wasting space on the disk!
 
    : # Check the initial size
    : ls -lh catalog-raw.txt
@@ -522,8 +506,8 @@ https://archive.stsci.edu/hlsp/uvudf
    : # De-compress
    : gunzip catalog-raw.txt.gz
 
-   How about all the files we just created? Let's put them into a tarball
-   so it becomes a single file
+   How about all the files we just created?
+   Let's put them into a tarball so it becomes a single file
 
    : tar -cvf my-discovery.tar *.txt
    : mkdir unpack
@@ -572,25 +556,24 @@ https://archive.stsci.edu/hlsp/uvudf
 
 * Outro
 
-  If you've learned nothing, it doesn't matter, take your time and watch
-  the video, or even look for other tutorials
+  If you've learned nothing, it doesn't matter, take your time and watch the video, or even look for other tutorials.
 
-  Beware of "why shoud I care!? I'm not a programmer!". If you're writing a
-  program, you're doing a programmers work. Do so elegantly, or fail
-  miserably.
+  Beware of "why shoud I care!? I'm not a programmer!".
+  If you're writing a program, you're doing a programmers work.
+  Do so elegantly, or fail miserably.
 
-  Physicists are famous for solving complex problems. They break down the
-  problem to smaller solvable chunks.
+  Physicists are famous for solving complex problems.
+  They break down the problem to smaller solvable chunks.
 
-  For instance, you get to where you must calculate an irregular area. The
-  physicist's art is done. Now you must figure out the answer with
-  mathematics. An expert has invented a solution already. You know how to
-  calculate the area of a simple rectangle! Divide it to infinitesimal
-  parts and integrate over it! Remember: you're not a mathematician,
-  probably not a good one anyway! But you've used the tools they created.
+  For instance, you get to where you must calculate an irregular area.
+  The physicist's art is done.
+  Now you must figure out the answer with mathematics.
+  An expert has invented a solution already.
+  You know how to calculate the area of a simple rectangle!
+  Divide it to infinitesimal parts and integrate over it!
+  Remember: you're not a mathematician, probably not a good one anyway!
+  But you're using the tools.
 
-* Some nice topics on general programming
+* Next steps
 
 - Clean coding
-- Software design
-- The SOLID princliples
