@@ -1,4 +1,34 @@
-* Commandline interface
+* Licensing
+
+  Working in CommandLine Interface, Shell, and Bash
+
+  This is the script for a talk given at IPM Observational Astronomy
+  Meeting - Tuesday, November 15. It is based on the IAC SMACK talks [1].
+
+  [1] https://gitlab.com/makhlaghi/smack-talks-iac
+
+  Original author:
+       Pedram Ashofteh-Ardakani <pedramardakani@pm.me>
+  Contributing author(s):
+       Mohammad Akhlaghi <mohammad@akhlaghi.org>
+  Copyright (C) 2022 Free Software Foundation, Inc.
+
+  The content and the scripts in this work are free work: you can
+  redistribute it and/or modify it under the terms of the GNU General
+  Public License as published by the Free Software Foundation, either
+  version 3 of the License, or (at your option) any later version.
+
+  This file is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+  more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this file. If not, see <http://www.gnu.org/licenses/>.
+
+* Commandline interface and Shell
+
+  : info bash
 
   _C_ommand_L_ine _I_nterface (CLI) works with the keyboard.
   Where you can get exactly what you need, manipulate it the way you want, and automate the procedure using scripts.
@@ -20,18 +50,19 @@
   This is called "pipe"ing.
   An awesome and extremely useful feature that is impossible by design in GUI.
 
-* Shell and Bash
+* Bash
 
-  : info bash intro what
+  : info bash
 
-  You may already know how to use =for=, =while=, =if=, or =variables= in another programming language.
-  So why should you care learning =Bash=?
+  Bash is just one form of =shell=, hence the name Bourne-Again SHell (pun intended in the naming).
+  There are older shells such as =sh= and more recent ones such as =zsh= (pronounced zee-shell).
 
-  If that is the only thing you know, please note that you've merely scratched the surface!
-  They have many advanced features, fixing a problem the previous programming language could not solve, or it was hard/slow/cumbersome/ugly to do so in the old way.
+  The purpose of the shell is to link different programs using the unified standard input (or input files) and standard output (or output files).
+  Therefore unlike other common "programming" languages like =C= or =Python=, numbers for example are just a string of characters (which by coincidence are digits).
 
-  With Bash, you have full control over your machine.
-  You can execute entire programs, scripts, manage services, handle various situations, automate cumbersome and repetitive work.
+  Of course, it also has similar structures to =C= or Python (like =if= or =for=);
+  But in the shell, these are higher-level constructs to make it easy to conditionally run programs or run them in a loop.
+
   Learning about the basic capabilities such as loops and conditional goes a long way.
   But you're not limited to that.
   There are many GNU programs and other CLI tools that come to your aid.
@@ -45,21 +76,32 @@
 
   Python has its own merits.
   It's great for quickly developing solutions.
-  However, it is not stable and is changing a lot so quickly.
+  However, it has a quick evolution where sometimes breaks backward compatibility.
   Your python script might not work on an older computer, or even on your own computer a few months (or two years at tops) from now!
 
-  However, it is most likely that your bash script executes just find on a computer as old as 1998!
+  The transition from Python 2 to Python 3 has not been easy for software that depended on it.
+  For instance, have a look at [[https://arxiv.org/abs/1712.00461][the hardship hte Large Synoptic Survey Telescope pipeline is going through [1]]].
+  It took them almost one decade and needed a lot of extra energy to engineer the update without crashing the whole thing while running on real data - from Subaru Telescope's Hyper Suprime Cam which was using it in those years, it is
+still using the LSST pipeline!
+
+  [1] https://arxiv.org/abs/1712.00461
+
+  In contrast, it is most likely that your bash script executes just find on a computer as old as 1998!
   This backward compatibility is a key backbone of *reproducibility*, an important element that is missing in many of the scientific endeavors done these days.
 
   So be nice to yourself, and use more stable and reproducible programming languages for the long run.
 
-  Another issue, is that bash operates on the Kernel and has a tremendous power of managing your entire machine.
-  You can easily run programs inside it (one of which is python!).
-  If you get to know this tool and master it, you'd be able to do automate many daily tasks and analyze stuff in a quick and easy way.
+  Another issue with python is that most of its modules are themselves written in Python, needing many layers of interpretation before your command reaches the CPU.
+  On the other hand, bash mostly runs on compiled programs that directly talk to the kernel.
+
+  Compiled programs are faster than interpreted programs in general, since they have already translated the source code to the specific machine you're using.
+  With this, you are able to fine-tune your programs and follow the best practices that allow for extremely useful optimizations.
+  For example, in the Warp library of Gnuastro, we are dealing with tens of millions of pixels, and hundreds of millions of processing on them.
+  Even 1 microsecond of delay in this huge scale could result in at least one extra minute, where 1 millisecond means 18 extra hours of runtime!
 
   Bash is a layer of abstraction over a very powerful set of tools.
   Don't be fooled by its easy looks and syntax.
-  You'd be able ot do wonders with it, as soon as you get to know your way around the manual.
+  As soon as you get to know your way around the manual, it can do wonders for you.
 
   With that said, let's dive in.
 
@@ -113,8 +155,9 @@ https://archive.stsci.edu/hlsp/uvudf
    : mkdir dataset
    : ls
 
-7. Download the file
+7. Download the Hubble Space Telescope (HST) [[https://archive.stsci.edu/prepds/uvudf][UVUDF survey catalog]].
 
+   : # The UVUDF survey catalog: https://archive.stsci.edu/prepds/uvudf
    : curl https://archive.stsci.edu/missions/hlsp/uvudf/v2.0/hlsp_uvudf_hst_wfc3-uvis_udf-epoch3_multi_v2.0_cat.fits
 
    : # We could have given it the output name in the first place by passing the '-o' option
@@ -560,7 +603,11 @@ https://archive.stsci.edu/hlsp/uvudf
 
   Beware of "why shoud I care!? I'm not a programmer!".
   If you're writing a program, you're doing a programmers work.
-  Do so elegantly, or fail miserably.
+
+  Two idioms:
+
+  1. One who has a hammer, sees everything as nails.
+  2. Do not reinvent the wheel.
 
   Physicists are famous for solving complex problems.
   They break down the problem to smaller solvable chunks.
