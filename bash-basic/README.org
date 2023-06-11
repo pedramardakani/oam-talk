@@ -1,30 +1,31 @@
-* Licensing
+* LICENSING
 
-  Working in CommandLine Interface, Shell, and Bash
+Working in CommandLine Interface, Shell, and Bash
 
-  This is the script for a talk given at IPM Observational Astronomy
-  Meeting - Tuesday, November 15. It is based on the IAC SMACK talks [1].
+This is the script for the talk given at IPM Observational Astronomy
+Meeting [^1]. It is based on the IAC SMACK talks [^2].
 
-  [1] https://gitlab.com/makhlaghi/smack-talks-iac
+[^1] https://ipm-oam.github.io/presentations/2022/Working_in_Command-Line_Interface/
+[^2] https://gitlab.com/makhlaghi/smack-talks-iac
 
-  Original author:
-       Pedram Ashofteh-Ardakani <pedramardakani@pm.me>
-  Contributing author(s):
-       Mohammad Akhlaghi <mohammad@akhlaghi.org>
-  Copyright (C) 2022 Free Software Foundation, Inc.
+Original author:
+  : Pedram Ashofteh-Ardakani <pedramardakani@pm.me>
+Contributing author(s):
+  : Mohammad Akhlaghi <mohammad@akhlaghi.org>
+Copyright (C) 2022 Free Software Foundation, Inc.
 
-  The content and the scripts in this work are free work: you can
-  redistribute it and/or modify it under the terms of the GNU General
-  Public License as published by the Free Software Foundation, either
-  version 3 of the License, or (at your option) any later version.
+The content and the scripts in this work are free work: you can
+redistribute it and/or modify it under the terms of the GNU General
+Public License as published by the Free Software Foundation, either
+version 3 of the License, or (at your option) any later version.
 
-  This file is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-  more details.
+This file is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
 
-  You should have received a copy of the GNU General Public License along
-  with this file. If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along
+with this file. If not, see <http://www.gnu.org/licenses/>.
 
 * Commandline interface and Shell
 
@@ -618,7 +619,7 @@ https://archive.stsci.edu/hlsp/uvudf
   An expert has invented a solution already.
   You know how to calculate the area of a simple rectangle!
   Divide it to infinitesimal parts and integrate over it!
-  Remember: you're not a mathematician, probably not a good one anyway!
+  Remember: you're not a mathematician, probably not one who can derive all formulas from scratch anyway!
   But you're using the tools.
 
 * Next steps
